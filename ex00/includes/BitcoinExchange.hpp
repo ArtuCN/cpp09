@@ -8,16 +8,45 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <cfloat>
 #include <list>
+#include <limits>
 #include "algorithm"
+#include <sstream>
+#include <iomanip> 
+#include <cmath>
 
 typedef std::map<time_t, float>::iterator iterator;
 typedef std::map<time_t, float>::const_iterator const_iterator;
+
+
+struct myTime
+{
+	int year;
+	int month;
+	int day;
+	bool operator==(const myTime& other) const {
+        return year == other.year && month == other.month && day == other.day;
+    }
+	bool operator<(const myTime& other) const {
+        if (year != other.year) return year < other.year;
+        if (month != other.month) return month < other.month;
+        return day < other.day;
+    }
+	void print() const {
+        std::cout << year << "-" 
+                  << (month < 10 ? "0" : "") << month << "-" 
+                  << (day < 10 ? "0" : "") << day;
+    }
+};
+
 class BitcoinExchange
 {
 	private:
-		std::map<time_t, float> _data;
-		std::map<time_t, float> _out;
+		std::map<myTime, float> _data;
+		std::string _out;
+		myTime _date;
+		float _val;
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &btce);
@@ -36,11 +65,15 @@ class BitcoinExchange
 					return _s.c_str();
 				};
 		};
-		time_t	ftStot(std::string str);
+		int		validVal(std::string str, std::string lineToAdd);
+		int		validDate(myTime date);
+		int		dateToDays(myTime date);
+		void	validStr(std::string str);
+		myTime	ftStot(std::string str);
 		float	ftStof(std::string str);
-		void 	fillMap(std::ifstream &file);
-
-		time_t	findDate();
+		void 	fillData(std::ifstream &file);
+		void	fillOut(std::ifstream &file);
+		std::string	findDate(myTime input);
 		float	calcVal();
 		void	printMap();
 };
