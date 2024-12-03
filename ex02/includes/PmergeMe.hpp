@@ -23,13 +23,10 @@ class PmergeMe
 {
 	private:
 
-		std::vector<std::pair<int, int> > _vecPairs;
-		std::deque<std::pair<int, int> > _deqPairs;
-
 		std::vector<int> _vec;
-		std::vector<int> _vec2;
+		std::vector<int> _vecPend;
 		std::deque<int> _deq;
-		std::deque<int> _deq2;
+		std::deque<int> _deqPend;
 	public:
 		PmergeMe();
 		PmergeMe(const PmergeMe &p);
@@ -45,8 +42,13 @@ class PmergeMe
 		void splitVec();
 		void splitDeq();
 
-		void mergePairsVec();
-		void mergePairsDeq();
+
+		void mergeVec(std::vector<std::pair<int, int> > &vecPairs, int left, int mid, int right);
+		void mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int mid, int right);
+
+		void mergePairsVec(std::vector<std::pair<int, int> > &vecPairs, int left, int right);
+		void mergePairsDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int right);
+
 		void printAllCon();
 		void checkNum();
 		void isValidInteger(const std::string& str);

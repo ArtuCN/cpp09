@@ -1,4 +1,4 @@
-SRC = main.cpp src/PmergeMe.cpp
+SRC = main.cpp src/PmergeMe.cpp src/Deq.cpp src/Vec.cpp
 OBJ_DIR = obj
 OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 CC = c++
