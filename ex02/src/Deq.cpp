@@ -11,7 +11,6 @@ void PmergeMe::fillDeq(int ac, char **av)
 		{
             _deq.push_back(number);
         }
-		std::cout<<"aggiunto un num "<<number<<"\n";
     }
 }
 
@@ -38,7 +37,8 @@ void PmergeMe::deqBinarySearch(int val)
 }
 
 void PmergeMe::splitDeq()
-{	
+{
+	_deqStart = clock();
 	std::deque<std::pair<int, int> > deqPairs;
 	deqPairs.clear();
 	int last = -1;
@@ -76,9 +76,9 @@ void PmergeMe::deqJacobPush(int last)
 	unsigned id = 3;
 	unsigned int limit = 0;
 	unsigned int nlimit;
-	while (id < _deqPend.size())
+	while (id <= _deqPend.size())
 	{
-		unsigned id2 = calculateJacobs(id) - 1;
+		unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _deqPend.size() - 1;
 		while (id2 >= _deqPend.size())
 			id2--;
 		nlimit = id2;
@@ -94,7 +94,11 @@ void PmergeMe::deqJacobPush(int last)
 		id++;
 	}
 	if (last != -1)
+	{
 		deqBinarySearch(last);
+	}
+	_deqEnd = clock();
+	std::cout << "Deque time:   "<<(double)(_deqEnd - _deqStart) / CLOCKS_PER_SEC << "\n";
 }
 
 void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int mid, int right)

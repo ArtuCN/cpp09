@@ -12,7 +12,6 @@ void PmergeMe::fillVec(int ac, char **av)
 		{
             _vec.push_back(number);
         }
-		std::cout<<" aggiunto un num "<<number;
 	}
 }
 
@@ -22,7 +21,6 @@ void PmergeMe::vecBinarySearch(int val)
 	int left = 0; 
 	int right = _vec.size();
 	int pos = -1; 
-	std::cout<<"val\n";
 
 	while (left < right) {
 		int mid = left + (right - left) / 2;
@@ -42,6 +40,7 @@ void PmergeMe::vecBinarySearch(int val)
 
 void PmergeMe::splitVec()
 {
+	_vecStart = clock();
 	std::vector<std::pair<int, int> > vecPairs;
 	int last = -1;
 	vecPairs.clear();
@@ -76,28 +75,31 @@ void PmergeMe::splitVec()
 void PmergeMe::vecJacobPush(int last)
 {
 	unsigned id = 3;
-	unsigned int limit = 0;
-	unsigned int nlimit;
-	while (id < _vecPend.size())
+    unsigned int limit = 0;
+    unsigned int nlimit;
+    while (id <= _vecPend.size())
+    {
+        unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _vecPend.size() - 1;
+        while (id2 >= _vecPend.size())
+            id2--;
+        nlimit = id2;
+        while (id2 > limit)
+        {
+            if (_vecPend[id2] == -1)
+                break;
+            vecBinarySearch(_vecPend[id2]);
+            _vecPend[id2] = -1;
+            id2--;
+        }
+        limit = nlimit;
+        id++;
+    }
+    if (last != -1)
 	{
-		unsigned id2 = calculateJacobs(id) - 1;
-		while (id2 >= _vecPend.size())
-			id2--;
-		nlimit = id2;
-		while (id2 > limit)
-		{
-			if (_vecPend[id2] == -1)
-				break;
-			vecBinarySearch(_vecPend[id2]);
-			_vecPend[id2] = -1;
-			id2--;
-		}
-		limit = nlimit;
-		id++;
+        vecBinarySearch(last);
 	}
-	if (last != -1)
-		vecBinarySearch(last);
-	std::cout<<"HO FINITO VEC\n";
+	_vecEnd = clock();
+	std::cout << "Vector time: "<< (double)(_vecEnd - _vecStart) / CLOCKS_PER_SEC << "\n";
 }
 
 

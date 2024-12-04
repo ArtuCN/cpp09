@@ -18,10 +18,18 @@
 #include <cstdlib> // Per std::strtod
 #include <cstring> // Per std::strcpy
 #include <stack>
+#include <deque>
+#include <ctime>
+#include <bits/types/timer_t.h>
 
 class PmergeMe
 {
 	private:
+
+		clock_t _vecStart;
+		clock_t _vecEnd;
+		clock_t _deqStart;
+		clock_t _deqEnd;
 
 		std::vector<int> _vec;
 		std::vector<int> _vecPend;
@@ -30,6 +38,7 @@ class PmergeMe
 		int _prev1;
 		int _prev2;
 		int _currId;
+		std::vector<int> _jacob;
 	public:
 		PmergeMe();
 		PmergeMe(const PmergeMe &p);
@@ -38,9 +47,6 @@ class PmergeMe
 
 		void fillVec(int ac, char **av);
 		void fillDeq(int ac, char **av);
-
-		void swapVec(int pos1, int pos2);
-		void swapDeq(int pos1, int pos2);
 
 		void splitVec();
 		void splitDeq();
@@ -58,7 +64,7 @@ class PmergeMe
 		void vecJacobPush(int last);
 		void deqJacobPush(int last);
 
-		int calculateJacobs(int id);
+		void calculateJacobs();
 		void printAllCon();
 		void checkNum();
 		void isValidInteger(const std::string& str);
