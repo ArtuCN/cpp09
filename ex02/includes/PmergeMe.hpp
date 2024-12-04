@@ -27,6 +27,9 @@ class PmergeMe
 		std::vector<int> _vecPend;
 		std::deque<int> _deq;
 		std::deque<int> _deqPend;
+		int _prev1;
+		int _prev2;
+		int _currId;
 	public:
 		PmergeMe();
 		PmergeMe(const PmergeMe &p);
@@ -49,6 +52,13 @@ class PmergeMe
 		void mergePairsVec(std::vector<std::pair<int, int> > &vecPairs, int left, int right);
 		void mergePairsDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int right);
 
+		void vecBinarySearch(int val);
+		void deqBinarySearch(int val);
+
+		void vecJacobPush(int last);
+		void deqJacobPush(int last);
+
+		int calculateJacobs(int id);
 		void printAllCon();
 		void checkNum();
 		void isValidInteger(const std::string& str);

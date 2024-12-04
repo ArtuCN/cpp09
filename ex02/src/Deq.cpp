@@ -11,7 +11,30 @@ void PmergeMe::fillDeq(int ac, char **av)
 		{
             _deq.push_back(number);
         }
+		std::cout<<"aggiunto un num "<<number<<"\n";
     }
+}
+
+void PmergeMe::deqBinarySearch(int val)
+{
+
+	int left = 0; 
+	int right = _deq.size();
+	int pos = -1; 
+
+	while (left < right) {
+		int mid = left + (right - left) / 2;
+
+		if (_deq[mid] < val)
+		{
+			left = mid + 1;
+		} else 
+		{
+			right = mid;
+		}
+	}
+	pos = left;
+	_deq.insert(_deq.begin() + pos, val);
 }
 
 void PmergeMe::splitDeq()
@@ -43,10 +66,35 @@ void PmergeMe::splitDeq()
 		deqPairs.pop_front();
 	}
 	_deq.push_front(_deqPend.front());
-	_deqPend.pop_front();
-	// if (last != -1)
-	// 	_deq.push_front(last);
-	(void)last;
+	_deqPend[0] = -1;
+	deqJacobPush(last);
+	
+}
+
+void PmergeMe::deqJacobPush(int last)
+{
+	unsigned id = 3;
+	unsigned int limit = 0;
+	unsigned int nlimit;
+	while (id < _deqPend.size())
+	{
+		unsigned id2 = calculateJacobs(id) - 1;
+		while (id2 >= _deqPend.size())
+			id2--;
+		nlimit = id2;
+		while (id2 > limit)
+		{
+			if (_deqPend[id2] == -1)
+				break;
+			deqBinarySearch(_deqPend[id2]);
+			_deqPend[id2] = -1;
+			id2--;
+		}
+		limit = nlimit;
+		id++;
+	}
+	if (last != -1)
+		deqBinarySearch(last);
 }
 
 void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int mid, int right)

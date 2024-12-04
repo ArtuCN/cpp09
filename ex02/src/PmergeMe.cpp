@@ -41,7 +41,9 @@ void PmergeMe::printAllCon()
 
 PmergeMe::PmergeMe()
 {
-
+	_currId = 1;
+	_prev1 = 1;
+	_prev2 = 0;
 }
 
 PmergeMe::PmergeMe(const PmergeMe &p)
@@ -70,6 +72,26 @@ PmergeMe &PmergeMe::operator =(const PmergeMe &p)
 PmergeMe::~PmergeMe()
 {
 
+}
+
+int PmergeMe::calculateJacobs(int id)
+{
+	if (id <= _currId)
+	{
+		if (id == 0)
+			return 0;
+		if (id == 1)
+			return 1;
+	}
+
+	for (int i = _currId + 1; i <= id; ++i)
+	{
+		int curr = _prev1 + 2 * _prev2;
+		_prev2 = _prev1;
+		_prev1 = curr;
+	}
+	_currId = id;
+	return _prev1;
 }
 
 void PmergeMe::isValidInteger(const std::string& str)

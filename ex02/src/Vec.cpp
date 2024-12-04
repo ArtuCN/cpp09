@@ -12,7 +12,31 @@ void PmergeMe::fillVec(int ac, char **av)
 		{
             _vec.push_back(number);
         }
+		std::cout<<" aggiunto un num "<<number;
 	}
+}
+
+void PmergeMe::vecBinarySearch(int val)
+{
+
+	int left = 0; 
+	int right = _vec.size();
+	int pos = -1; 
+	std::cout<<"val\n";
+
+	while (left < right) {
+		int mid = left + (right - left) / 2;
+
+		if (_vec[mid] < val)
+		{
+			left = mid + 1;
+		} else 
+		{
+			right = mid;
+		}
+	}
+	pos = left;
+	_vec.insert(_vec.begin() + pos, val);
 }
 
 
@@ -38,17 +62,42 @@ void PmergeMe::splitVec()
 			vecPairs.push_back(std::make_pair(first,second));
 	}
 	mergePairsVec(vecPairs, 0, vecPairs.size()-1);
-	// if (last != -1)
-	// 	_vec.push_back(last);
 	while (!vecPairs.empty())
 	{
-		_vecPend.push_back(vecPairs.front().second);  // Aggiungi il secondo elemento in ordine
-    	_vec.push_back(vecPairs.front().first);  // Aggiungi il primo elemento in ordine
+		_vecPend.push_back(vecPairs.front().second);
+    	_vec.push_back(vecPairs.front().first);
     	vecPairs.erase(vecPairs.begin());
 	}
 	_vec.insert(_vec.begin(), _vecPend.front());
-	_vecPend.erase(_vecPend.begin());
-	(void)last;
+	_vecPend[0] = -1;
+	vecJacobPush(last);
+}
+
+void PmergeMe::vecJacobPush(int last)
+{
+	unsigned id = 3;
+	unsigned int limit = 0;
+	unsigned int nlimit;
+	while (id < _vecPend.size())
+	{
+		unsigned id2 = calculateJacobs(id) - 1;
+		while (id2 >= _vecPend.size())
+			id2--;
+		nlimit = id2;
+		while (id2 > limit)
+		{
+			if (_vecPend[id2] == -1)
+				break;
+			vecBinarySearch(_vecPend[id2]);
+			_vecPend[id2] = -1;
+			id2--;
+		}
+		limit = nlimit;
+		id++;
+	}
+	if (last != -1)
+		vecBinarySearch(last);
+	std::cout<<"HO FINITO VEC\n";
 }
 
 
