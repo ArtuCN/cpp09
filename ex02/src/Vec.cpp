@@ -2,16 +2,13 @@
 
 void PmergeMe::fillVec(int ac, char **av)
 {
-	for (int i = 1; i < ac; i++)
-	{
+	for (int i = 1; i < ac; i++){
         std::string arg = av[i];
 		isValidInteger(arg);
         std::stringstream ss(arg);
         int number;
         while (ss >> number)
-		{
             _vec.push_back(number);
-        }
 	}
 }
 
@@ -36,7 +33,6 @@ void PmergeMe::vecBinarySearch(int val)
 	pos = left;
 	_vec.insert(_vec.begin() + pos, val);
 }
-
 
 void PmergeMe::splitVec()
 {
@@ -68,7 +64,7 @@ void PmergeMe::splitVec()
     	vecPairs.erase(vecPairs.begin());
 	}
 	_vec.insert(_vec.begin(), _vecPend.front());
-	_vecPend[0] = -1;
+	_vecPend.front() = -1;
 	vecJacobPush(last);
 }
 
@@ -102,22 +98,18 @@ void PmergeMe::vecJacobPush(int last)
 	std::cout << "Vector time: "<< (double)(_vecEnd - _vecStart) / CLOCKS_PER_SEC << "\n";
 }
 
-
 void PmergeMe::mergeVec(std::vector<std::pair<int, int> > &vecPairs, int left, int mid, int right)
 {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
 	std::vector<std::pair<int, int> > L(n1), R(n2);
-
 	for (int i = 0; i < n1; i++)
 		L[i] = vecPairs[left + i];
 	for (int j = 0; j < n2; j++)
 		R[j] = vecPairs[mid + 1 + j];
-	
 	int i = 0, j = 0;
     int k = left;
-    
 	while (i < n1 && j < n2)
 	{
 		if (L[i].first <= R[j].first)

@@ -12,30 +12,26 @@
 void PmergeMe::printAllCon()
 {
 	std::cout << "Vector:   ";
-	for (size_t i = 0; i < _vec.size(); ++i)
+	if (_vec.size() <= 4)
 	{
-		std::cout << _vec[i] << " ";
+		for (size_t i = 0; i < _vec.size(); ++i)
+		{
+			std::cout << _vec[i] << " ";
+		}
 	}
-	std::cout << std::endl;
-
-	std::cout << "Vector 2: ";
-	for (size_t i = 0; i < _vecPend.size(); ++i)
-	{
-		std::cout << _vecPend[i] << " ";
-	}
+	else
+		std::cout<< _vec[0] << " " << _vec[1] << " ... " << _vec[_vec.size() - 2] << " " <<_vec[_vec.size() - 1];
 	std::cout << std::endl;
 	std::cout << "Deque:   ";
-	for (size_t i = 0; i < _deq.size(); ++i)
+	if (_deq.size() <= 4)
 	{
-		std::cout << _deq[i] << " ";
+		for (size_t i = 0; i < _deq.size(); ++i)
+		{
+			std::cout << _deq[i] << " ";
+		}
 	}
-	std::cout << std::endl;
-
-	std::cout << "Deque 2: ";
-	for (size_t i = 0; i < _deqPend.size(); ++i)
-	{
-		std::cout << _deqPend[i] << " ";
-	}
+	else
+		std::cout<< _deq[0] << " " << _deq[1] << " ... " << _deq[_deq.size() - 2] << " " <<_deq[_vec.size() - 1];
 	std::cout << std::endl;
 }
 

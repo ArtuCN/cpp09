@@ -8,9 +8,7 @@ void PmergeMe::fillDeq(int ac, char **av)
         std::stringstream ss(arg);
         int number;
         while (ss >> number)
-		{
             _deq.push_back(number);
-        }
     }
 }
 
@@ -40,8 +38,8 @@ void PmergeMe::splitDeq()
 {
 	_deqStart = clock();
 	std::deque<std::pair<int, int> > deqPairs;
-	deqPairs.clear();
 	int last = -1;
+	deqPairs.clear();
 	if (_deq.size()%2 != 0)
 	{
 		last = _deq.back();
@@ -68,7 +66,6 @@ void PmergeMe::splitDeq()
 	_deq.push_front(_deqPend.front());
 	_deqPend[0] = -1;
 	deqJacobPush(last);
-	
 }
 
 void PmergeMe::deqJacobPush(int last)
@@ -107,27 +104,22 @@ void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, in
 	int n2 = right - mid;
 
 	std::deque<std::pair<int, int> > L(n1), R(n2);
-
 	for (int i = 0; i < n1; i++)
 		L[i] = deqPairs[left + i];
 	for (int j = 0; j < n2; j++)
 		R[j] = deqPairs[mid + 1 + j];
-	
 	int i = 0, j = 0;
 	int k = left;
-	
 	while (i < n1 && j < n2)
 	{
 		if (L[i].first <= R[j].first)
 		{
-			deqPairs[k].first = L[i].first;
-			deqPairs[k].second = L[i].second;
+			deqPairs[k] = L[i];
 			i++;
 		}
 		else
 		{
-			deqPairs[k].first = R[j].first;
-			deqPairs[k].second = R[j].second;
+			deqPairs[k] = R[j];
 			j++;	
 		}
 		k++;
@@ -144,9 +136,6 @@ void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, in
 	}
 }
 
-// 8 6 | 3 5 | 4 1 | 7 10
-// 8 6 | 3 5 |
-//
 void PmergeMe::mergePairsDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int right)
 {
 	if (left >= right)

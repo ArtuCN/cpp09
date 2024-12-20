@@ -53,15 +53,13 @@ void RPN::checkInput(std::string av)
 		{
 			while (av[i] && std::isdigit(av[i]))
 				i++;
-			num ++;
+			num++;
 		}
 		else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/')
 			op++;
 		else
 		 	throw exc("Error: not valid character");
 	}
-	if (num > 10)
-		throw exc("Error: numbers are more than 10!");
 	if (op + 1 == num)
 		return ;
 	else
@@ -105,6 +103,8 @@ void RPN::fillStack(std::string av)
 			{
 				num = (num * 10) + ((av[i] - 48));
 			}
+			if (num >= 10)
+				throw exc(("Error: num >= 10!"));
 			_n.push(num);
 		}
 		else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/')

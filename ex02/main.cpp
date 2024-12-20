@@ -14,9 +14,10 @@ int main(int ac, char **av)
 		
 		p.fillDeq(ac, av);
 		p.fillVec(ac, av);
+		p.printAllCon();
 		p.splitDeq();
 		p.splitVec();
-		//p.printAllCon();
+		p.printAllCon();
 	} catch (std::exception &e) {
 		std::cout<<e.what()<<"\n";
 	}

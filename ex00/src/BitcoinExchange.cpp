@@ -136,12 +136,14 @@ std::string	BitcoinExchange::findDate(myTime input)
 	myTime ret;
 	for (std::map<myTime, double>::iterator it = _data.begin(); it != _data.end(); ++it)
 	{
-		
-		diff = std::abs(conv - dateToDays(it->first));
-		if (temp > diff)
+		if (dateToDays(it->first) <= conv)
 		{
-			temp = diff;
-			ret = it->first;
+			diff = conv - dateToDays(it->first);
+			if (temp > diff)
+			{
+				temp = diff;
+				ret = it->first;
+			}
 		}
 	}
 	_date.day = ret.day;
