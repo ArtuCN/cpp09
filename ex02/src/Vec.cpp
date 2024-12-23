@@ -73,23 +73,29 @@ void PmergeMe::vecJacobPush(int last)
 	unsigned id = 3;
     unsigned int limit = 0;
     unsigned int nlimit;
-    while (id <= _vecPend.size())
-    {
-        unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _vecPend.size() - 1;
-        while (id2 >= _vecPend.size())
-            id2--;
-        nlimit = id2;
-        while (id2 > limit)
-        {
-            if (_vecPend[id2] == -1)
-                break;
-            vecBinarySearch(_vecPend[id2]);
-            _vecPend[id2] = -1;
-            id2--;
-        }
-        limit = nlimit;
-        id++;
-    }
+	if (_vecPend.size() <= id)
+	{
+		vecBinarySearch(_vecPend[1]);
+	}
+	else {
+		while (id <= _vecPend.size())
+		{
+			unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _vecPend.size() - 1;
+			while (id2 >= _vecPend.size())
+				id2--;
+			nlimit = id2;
+			while (id2 > limit)
+			{
+				if (_vecPend[id2] == -1)
+					break;
+				vecBinarySearch(_vecPend[id2]);
+				_vecPend[id2] = -1;
+				id2--;
+			}
+			limit = nlimit;
+			id++;
+		}
+	}
     if (last != -1)
 	{
         vecBinarySearch(last);
@@ -120,7 +126,7 @@ void PmergeMe::mergeVec(std::vector<std::pair<int, int> > &vecPairs, int left, i
 		else
 		{
 			vecPairs[k] = R[j];
-			j++;	
+			j++;
 		}
 		k++;
 	}
