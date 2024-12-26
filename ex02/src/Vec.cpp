@@ -75,7 +75,8 @@ void PmergeMe::vecJacobPush(int last)
     unsigned int nlimit;
 	if (_vecPend.size() <= id)
 	{
-		vecBinarySearch(_vecPend[1]);
+		if (_vecPend[1])
+			vecBinarySearch(_vecPend[1]);
 	}
 	else {
 		while (id <= _vecPend.size())
