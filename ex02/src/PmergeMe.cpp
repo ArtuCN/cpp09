@@ -31,7 +31,7 @@ void PmergeMe::printAllCon()
 		}
 	}
 	else
-		std::cout<< _deq[0] << " " << _deq[1] << " ... " << _deq[_deq.size() - 2] << " " <<_deq[_vec.size() - 1];
+		std::cout<< _deq[0] << " " << _deq[1] << " ... " << _deq[_deq.size() - 2] << " " <<_deq[_deq.size() - 1];
 	std::cout << std::endl;
 }
 

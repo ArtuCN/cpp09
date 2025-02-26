@@ -116,7 +116,7 @@ void PmergeMe::deqJacobPush(int last)
 		deqBinarySearch(last);
 	}
 	_deqEnd = clock();
-	std::cout << "Deque time:   "<<(double)(_deqEnd - _deqStart) / CLOCKS_PER_SEC << "\n";
+	std::cout << "Time to process a range of " << _deq.size()<<  " elements with std::deque time: "<< (double)(_deqEnd - _deqStart) / CLOCKS_PER_SEC << "\n";
 }
 
 void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int mid, int right)

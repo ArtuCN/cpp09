@@ -86,12 +86,8 @@ void PmergeMe::vecJacobPush(int last)
 	{
 		vecBinarySearch(last);
 	}
-    if (last != -1)
-	{
-        vecBinarySearch(last);
-	}
 	_vecEnd = clock();
-	std::cout << "Vector time: "<< (double)(_vecEnd - _vecStart) / CLOCKS_PER_SEC << "\n";
+	std::cout << "Time to process a range of " << _vec.size()<<  " elements with std::vector time: "<< (double)(_vecEnd - _vecStart) / CLOCKS_PER_SEC << "\n";
 }
 
 void PmergeMe::mergeVec(std::vector<std::pair<int, int> > &vecPairs, int left, int mid, int right)
