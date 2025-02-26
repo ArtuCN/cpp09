@@ -12,15 +12,15 @@
 void PmergeMe::printAllCon()
 {
 	std::cout << "Vector:   ";
-	// if (_vec.size() <= 4)
-	// {
+	if (_vec.size() <= 4)
+	{
 		for (size_t i = 0; i < _vec.size(); ++i)
 		{
 			std::cout << _vec[i] << " ";
 		}
-	// }
-	// else
-	// 	std::cout<< _vec[0] << " " << _vec[1] << " ... " << _vec[_vec.size() - 2] << " " <<_vec[_vec.size() - 1];
+	}
+	else
+		std::cout<< _vec[0] << " " << _vec[1] << " ... " << _vec[_vec.size() - 2] << " " <<_vec[_vec.size() - 1];
 	std::cout << std::endl;
 	std::cout << "Deque:   ";
 	if (_deq.size() <= 4)
@@ -99,11 +99,11 @@ void PmergeMe::isValidInteger(const std::string& str)
         num_stream >> num;
         
         if (num_stream.fail() || !num_stream.eof()) {
-            throw exc("invalid num");
+            throw exc("Error: invalid num");
         }
 
         if (num < 0) {
-            throw exc("num is < 0");
+            throw exc("Error: num is < 0");
         }
     }
 }

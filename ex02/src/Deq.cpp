@@ -10,11 +10,27 @@ void PmergeMe::fillDeq(int ac, char **av)
         while (ss >> number)
             _deq.push_back(number);
     }
+	if (_deq.size() == 1)
+		throw exc("Only one element.");
+	bool ordered = true;
+	for (size_t i = 0; i < _deq.size(); i++)
+	{
+		int t = _deq[i];
+		if (std::count(_deq.begin(), _deq.end(), t) > 1)
+			throw exc("Error: duplicate element.");
+		if (i + 1 < _deq.size())
+		{
+			if (_deq[i] < _deq[i + 1])
+				ordered = false;
+		} 
+	}
+	if (ordered == true)
+		throw exc("Already ordered!");
+
 }
 
 void PmergeMe::deqBinarySearch(int val)
 {
-
 	int left = 0; 
 	int right = _deq.size();
 	int pos = -1; 
@@ -73,22 +89,30 @@ void PmergeMe::deqJacobPush(int last)
 	unsigned id = 3;
 	unsigned int limit = 0;
 	unsigned int nlimit;
-	while (id <= _deqPend.size())
+	if (_deqPend.size() <= id)
 	{
-		unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _deqPend.size() - 1;
-		while (id2 >= _deqPend.size())
-			id2--;
-		nlimit = id2;
-		while (id2 > limit)
+		if (_deqPend[1])
+			deqBinarySearch(_deqPend[1]);
+	}
+	else
+	{
+		while (id <= _deqPend.size())
 		{
-			if (_deqPend[id2] == -1)
-				break;
-			deqBinarySearch(_deqPend[id2]);
-			_deqPend[id2] = -1;
-			id2--;
+			unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _deqPend.size() - 1;
+			while (id2 >= _deqPend.size())
+				id2--;
+			nlimit = id2;
+			while (id2 > limit)
+			{
+				if (_deqPend[id2] == -1)
+					break;
+				deqBinarySearch(_deqPend[id2]);
+				_deqPend[id2] = -1;
+				id2--;
+			}
+			limit = nlimit;
+			id++;
 		}
-		limit = nlimit;
-		id++;
 	}
 	if (last != -1)
 	{
