@@ -118,6 +118,9 @@ void RPN::fillStack(std::string av)
 			_op.pop();
 			_n.push(_res);
 		}
+		else {
+			_res = num;
+		}
 	}
 }
 
