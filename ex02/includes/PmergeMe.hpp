@@ -67,6 +67,9 @@ class PmergeMe
 		void calculateJacobs();
 		void printAllCon();
 		void checkNum();
+
+		void printDeq(std::deque<int> toprint);
+
 		void isValidInteger(const std::string& str);
 		class exc: public std::exception
 		{

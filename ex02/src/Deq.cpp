@@ -1,4 +1,16 @@
 #include "../includes/PmergeMe.hpp"
+#include <cstddef>
+#include <deque>
+
+
+void PmergeMe::printDeq(std::deque<int> toprint)
+{
+	for (std::deque<int>::iterator it = toprint.begin(); it != toprint.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+}
 
 void PmergeMe::fillDeq(int ac, char **av)
 {
@@ -20,7 +32,7 @@ void PmergeMe::fillDeq(int ac, char **av)
 			throw exc("Error: duplicate element.");
 		if (i + 1 < _deq.size())
 		{
-			if (_deq[i] < _deq[i + 1])
+			if (_deq[i] > _deq[i + 1])
 				ordered = false;
 		} 
 	}
@@ -79,40 +91,31 @@ void PmergeMe::splitDeq()
 		_deq.push_back(deqPairs.front().first);
 		deqPairs.pop_front();
 	}
-	_deq.push_front(_deqPend.front());
-	_deqPend[0] = -1;
+	// _deq.push_front(_deqPend.front());
+	// _deqPend[0] = -1;
 	deqJacobPush(last);
 }
 
 void PmergeMe::deqJacobPush(int last)
 {
-	unsigned id = 3;
-	unsigned int limit = 0;
-	unsigned int nlimit;
-	if (_deqPend.size() <= id)
+	calculateJacobs();
+	// std::cout<<"pend:\n";
+	// printDeq(_deqPend);
+	// std::cout<<"deq:\n";
+	// printDeq(_deq);
+	int i = 0;
+	while(i < (int)_jacob.size())
 	{
-		if (_deqPend[1])
-			deqBinarySearch(_deqPend[1]);
-	}
-	else
-	{
-		while (id <= _deqPend.size())
+		int toPush = _jacob[i] - 1;
+		int nextID = (i + 1 < (int)_jacob.size()) ? _jacob[i + 1] - 1 : (int)_deqPend.size();
+		while (toPush < nextID && toPush < (int)_deqPend.size())
 		{
-			unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _deqPend.size() - 1;
-			while (id2 >= _deqPend.size())
-				id2--;
-			nlimit = id2;
-			while (id2 > limit)
-			{
-				if (_deqPend[id2] == -1)
-					break;
-				deqBinarySearch(_deqPend[id2]);
-				_deqPend[id2] = -1;
-				id2--;
-			}
-			limit = nlimit;
-			id++;
+			if (toPush < 0 || toPush >= (int)_deqPend.size())
+            	break;
+			deqBinarySearch(_deqPend[toPush]);
+			toPush++;
 		}
+		i++;
 	}
 	if (last != -1)
 	{
@@ -120,6 +123,10 @@ void PmergeMe::deqJacobPush(int last)
 	}
 	_deqEnd = clock();
 	std::cout << "Deque time:   "<<(double)(_deqEnd - _deqStart) / CLOCKS_PER_SEC << "\n";
+	// std::cout<<"pend:\n";
+	// printDeq(_deqPend);
+	// std::cout<<"deq:\n";
+	// printDeq(_deq);
 }
 
 void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &deqPairs, int left, int mid, int right)
