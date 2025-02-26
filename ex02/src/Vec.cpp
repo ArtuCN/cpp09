@@ -63,39 +63,28 @@ void PmergeMe::splitVec()
     	_vec.push_back(vecPairs.front().first);
     	vecPairs.erase(vecPairs.begin());
 	}
-	_vec.insert(_vec.begin(), _vecPend.front());
-	_vecPend.front() = -1;
 	vecJacobPush(last);
 }
 
 void PmergeMe::vecJacobPush(int last)
 {
-	unsigned id = 3;
-    unsigned int limit = 0;
-    unsigned int nlimit;
-	if (_vecPend.size() <= id)
+	int i = 0;
+	while(i < (int)_jacob.size())
 	{
-		if (_vecPend[1])
-			vecBinarySearch(_vecPend[1]);
-	}
-	else {
-		while (id <= _vecPend.size())
+		int toPush = _jacob[i] - 1;
+		int nextID = (i + 1 < (int)_jacob.size()) ? _jacob[i + 1] - 1 : (int)_vecPend.size();
+		while (toPush < nextID && toPush < (int)_vecPend.size())
 		{
-			unsigned id2 = (id < _jacob.size()) ? _jacob[id] - 1 : _vecPend.size() - 1;
-			while (id2 >= _vecPend.size())
-				id2--;
-			nlimit = id2;
-			while (id2 > limit)
-			{
-				if (_vecPend[id2] == -1)
-					break;
-				vecBinarySearch(_vecPend[id2]);
-				_vecPend[id2] = -1;
-				id2--;
-			}
-			limit = nlimit;
-			id++;
+			if (toPush < 0 || toPush >= (int)_vecPend.size())
+            	break;
+			vecBinarySearch(_vecPend[toPush]);
+			toPush++;
 		}
+		i++;
+	}
+	if (last != -1)
+	{
+		vecBinarySearch(last);
 	}
     if (last != -1)
 	{

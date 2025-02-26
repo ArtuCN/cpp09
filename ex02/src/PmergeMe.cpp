@@ -23,15 +23,15 @@ void PmergeMe::printAllCon()
 		std::cout<< _vec[0] << " " << _vec[1] << " ... " << _vec[_vec.size() - 2] << " " <<_vec[_vec.size() - 1];
 	std::cout << std::endl;
 	std::cout << "Deque:   ";
-	// if (_deq.size() <= 4)
-	// {
+	if (_deq.size() <= 4)
+	{
 		for (size_t i = 0; i < _deq.size(); ++i)
 		{
 			std::cout << _deq[i] << " ";
 		}
-	// }
-	// else
-	// 	std::cout<< _deq[0] << " " << _deq[1] << " ... " << _deq[_deq.size() - 2] << " " <<_deq[_vec.size() - 1];
+	}
+	else
+		std::cout<< _deq[0] << " " << _deq[1] << " ... " << _deq[_deq.size() - 2] << " " <<_deq[_vec.size() - 1];
 	std::cout << std::endl;
 }
 
@@ -83,7 +83,6 @@ void PmergeMe::calculateJacobs() {
     for (int i = 2; i <= size; ++i) {
         int curr = _jacob[i - 1] + 2 * _jacob[i - 2];
         _jacob.push_back(curr);
-		std::cout<< "JACOB ARRAY = " << curr <<"\n";
     }
 }
 

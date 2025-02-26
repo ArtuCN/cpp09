@@ -171,25 +171,33 @@ int	BitcoinExchange::validDate(myTime date)
 int BitcoinExchange::validVal(std::string str, std::string &lineToAdd)
 {
 	if (str.length() < 14)
+	{
+		lineToAdd  = "Error: empty value";
 		return 0;
+	}
 	if (str[13] == '-')
 	{
 		lineToAdd = "Error: not a positive number.";
 		return  0;
 	}
-	std::string temp = str.substr(12);
+	std::string temp = str.substr(13);
+	if (temp.length() == 0)
+	{
+		lineToAdd  = "Error: empty value";
+		return 0;
+	}	
 	for (size_t i = 0; i < temp.length(); i++)
 	{
-		if (!isdigit(temp[i]) && temp[i] != '.' && !temp[i])
+		if (temp[i] != '.' && (temp[i] < '0' || temp[i] > '9'))
 		{
-			lineToAdd  = "Error: invalid value";
+			lineToAdd  = "Error: invalid value " + temp;
 			return 0;
 		}
 	}
 	double res = myStof(temp);
 	if (res > 1000)
 	{
-		lineToAdd = "Error: too large a number.";
+		lineToAdd = "Error: too large number.";
 		return 0;
 	}
 	return 1;
